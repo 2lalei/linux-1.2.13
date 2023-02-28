@@ -656,17 +656,17 @@ void net_bh(void *tmp)
 	/*
 	 *	While the queue is not empty
 	 */
-	 
-	while((skb=skb_dequeue(&backlog))!=NULL)
+
+	while ((skb = skb_dequeue(&backlog)) != NULL)
 	{
 		/*
 		 *	We have a packet. Therefore the queue has shrunk
 		 */
-  		backlog_size--;
+		backlog_size--;
 
 		sti();
 		
-	       /*
+		/*
 		*	Bump the pointer to the next structure.
 		*	This assumes that the basic 'skb' pointer points to
 		*	the MAC header, if any (as indicated by its "length"
@@ -676,7 +676,7 @@ void net_bh(void *tmp)
 		skb->h.raw = skb->data + skb->dev->hard_header_len;
 		skb->len -= skb->dev->hard_header_len;
 
-	       /*
+		/*
 		* 	Fetch the packet protocol ID.  This is also quite ugly, as
 		* 	it depends on the protocol driver (the interface itself) to
 		* 	know what the type is, or where to get it from.  The Ethernet
@@ -749,13 +749,13 @@ void net_bh(void *tmp)
 
 		dev_transmit();
 		cli();
-  	}	/* End of queue loop */
-  	
-  	/*
-  	 *	We have emptied the queue
-  	 */
-  	 
-  	in_bh = 0;
+	}	/* End of queue loop */
+	
+	/*
+	 *	We have emptied the queue
+	 */
+	 
+	in_bh = 0;
 	sti();
 	
 	/*

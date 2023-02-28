@@ -42,9 +42,8 @@
 /*
  *	We tag these structures with multicasts.
  */
- 
-struct dev_mc_list
-{	
+
+struct dev_mc_list {	
 	struct dev_mc_list *next;
 	char dmi_addr[MAX_ADDR_LEN];
 	unsigned short dmi_addrlen;
@@ -57,121 +56,115 @@ struct dev_mc_list
  * data with strictly "high-level" data, and it has to know about
  * almost every data structure used in the INET module.  
  */
-struct device 
-{
+struct device {
+	/*
+	 * This is the first field of the "visible" part of this structure
+	 * (i.e. as seen by users in the "Space.c" file).  It is the name
+	 * the interface.
+	 */
+	char *name;
 
-  /*
-   * This is the first field of the "visible" part of this structure
-   * (i.e. as seen by users in the "Space.c" file).  It is the name
-   * the interface.
-   */
-  char			  *name;
+	/* I/O specific fields - FIXME: Merge these and struct ifmap into one */
+	unsigned long rmem_end;	  /* shmem "recv" end	*/
+	unsigned long rmem_start; /* shmem "recv" start	*/
+	unsigned long mem_end;	  /* sahared mem end	*/
+	unsigned long mem_start;  /* shared mem start	*/
+	unsigned long base_addr;  /* device I/O address	*/
+	unsigned char irq;	  /* device IRQ number	*/
 
-  /* I/O specific fields - FIXME: Merge these and struct ifmap into one */
-  unsigned long		  rmem_end;		/* shmem "recv" end	*/
-  unsigned long		  rmem_start;		/* shmem "recv" start	*/
-  unsigned long		  mem_end;		/* sahared mem end	*/
-  unsigned long		  mem_start;		/* shared mem start	*/
-  unsigned long		  base_addr;		/* device I/O address	*/
-  unsigned char		  irq;			/* device IRQ number	*/
+	/* Low-level status flags. */
+	volatile unsigned char start,           /* start an operation	*/
+			       tbusy,           /* transmitter busy	*/
+			       interrupt;       /* interrupt arrived	*/
 
-  /* Low-level status flags. */
-  volatile unsigned char  start,		/* start an operation	*/
-                          tbusy,		/* transmitter busy	*/
-                          interrupt;		/* interrupt arrived	*/
+	struct device *next;
 
-  struct device		  *next;
+	/* The device initialization function. Called only once. */
+	int (*init)(struct device *dev);
 
-  /* The device initialization function. Called only once. */
-  int			  (*init)(struct device *dev);
+	/* Some hardware also needs these fields, but they are not part of the
+	   usual set specified in Space.c. */
+	unsigned char if_port; /* Selectable AUI, TP,..*/
+	unsigned char dma;     /* DMA channel		*/
 
-  /* Some hardware also needs these fields, but they are not part of the
-     usual set specified in Space.c. */
-  unsigned char		  if_port;		/* Selectable AUI, TP,..*/
-  unsigned char		  dma;			/* DMA channel		*/
+	struct enet_statistics *(*get_stats)(struct device *dev);
 
-  struct enet_statistics* (*get_stats)(struct device *dev);
+	/*
+	 * This marks the end of the "visible" part of the structure. All
+	 * fields hereafter are internal to the system, and may change at
+	 * will (read: may be cleaned up at will).
+	 */
 
-  /*
-   * This marks the end of the "visible" part of the structure. All
-   * fields hereafter are internal to the system, and may change at
-   * will (read: may be cleaned up at will).
-   */
+	/* These may be needed for future network-power-down code. */
+	unsigned long trans_start; /* Time (in jiffies) of last Tx	*/
+	unsigned long last_rx;	   /* Time of last Rx		*/
 
-  /* These may be needed for future network-power-down code. */
-  unsigned long		  trans_start;	/* Time (in jiffies) of last Tx	*/
-  unsigned long		  last_rx;	/* Time of last Rx		*/
+	unsigned short flags;		/* interface flags (a la BSD)	*/
+	unsigned short family;		/* address family ID (AF_INET)	*/
+	unsigned short metric;		/* routing metric (not used)	*/
+	unsigned short mtu;		/* interface MTU value		*/
+	unsigned short type;		/* interface hardware type	*/
+	unsigned short hard_header_len; /* hardware hdr length	*/
+	void *priv;			/* pointer to private data	*/
 
-  unsigned short	  flags;	/* interface flags (a la BSD)	*/
-  unsigned short	  family;	/* address family ID (AF_INET)	*/
-  unsigned short	  metric;	/* routing metric (not used)	*/
-  unsigned short	  mtu;		/* interface MTU value		*/
-  unsigned short	  type;		/* interface hardware type	*/
-  unsigned short	  hard_header_len;	/* hardware hdr length	*/
-  void			  *priv;	/* pointer to private data	*/
+	/* Interface address info. */
+	unsigned char broadcast[MAX_ADDR_LEN]; /* hw bcast add	*/
+	unsigned char dev_addr[MAX_ADDR_LEN];  /* hw address	*/
+	unsigned char addr_len;		       /* hardware address length	*/
+	unsigned long pa_addr;		       /* protocol address		*/
+	unsigned long pa_brdaddr;	       /* protocol broadcast addr	*/
+	unsigned long pa_dstaddr;	       /* protocol P-P other side addr	*/
+	unsigned long pa_mask;		       /* protocol netmask		*/
+	unsigned short pa_alen;		       /* protocol address length	*/
 
-  /* Interface address info. */
-  unsigned char		  broadcast[MAX_ADDR_LEN];	/* hw bcast add	*/
-  unsigned char		  dev_addr[MAX_ADDR_LEN];	/* hw address	*/
-  unsigned char		  addr_len;	/* hardware address length	*/
-  unsigned long		  pa_addr;	/* protocol address		*/
-  unsigned long		  pa_brdaddr;	/* protocol broadcast addr	*/
-  unsigned long		  pa_dstaddr;	/* protocol P-P other side addr	*/
-  unsigned long		  pa_mask;	/* protocol netmask		*/
-  unsigned short	  pa_alen;	/* protocol address length	*/
+	struct dev_mc_list *mc_list; /* Multicast mac addresses	*/
+	int mc_count;		     /* Number of installed mcasts	*/
 
-  struct dev_mc_list	 *mc_list;	/* Multicast mac addresses	*/
-  int			 mc_count;	/* Number of installed mcasts	*/
-  
-  struct ip_mc_list	 *ip_mc_list;	/* IP multicast filter chain    */
-    
-  /* For load balancing driver pair support */
-  
-  unsigned long		   pkt_queue;	/* Packets queued */
-  struct device		  *slave;	/* Slave device */
-  
+	struct ip_mc_list *ip_mc_list; /* IP multicast filter chain    */
 
-  /* Pointer to the interface buffers. */
-  struct sk_buff_head	  buffs[DEV_NUMBUFFS];
+	/* For load balancing driver pair support */
 
-  /* Pointers to interface service routines. */
-  int			  (*open)(struct device *dev);
-  int			  (*stop)(struct device *dev);
-  int			  (*hard_start_xmit) (struct sk_buff *skb,
-					      struct device *dev);
-  int			  (*hard_header) (unsigned char *buff,
-					  struct device *dev,
-					  unsigned short type,
-					  void *daddr,
-					  void *saddr,
-					  unsigned len,
-					  struct sk_buff *skb);
-  int			  (*rebuild_header)(void *eth, struct device *dev,
-				unsigned long raddr, struct sk_buff *skb);
-  unsigned short	  (*type_trans) (struct sk_buff *skb,
-					 struct device *dev);
-#define HAVE_MULTICAST			 
-  void			  (*set_multicast_list)(struct device *dev,
-  					 int num_addrs, void *addrs);
-#define HAVE_SET_MAC_ADDR  		 
-  int			  (*set_mac_address)(struct device *dev, void *addr);
+	unsigned long pkt_queue; /* Packets queued */
+	struct device *slave;	 /* Slave device */
+
+	/* Pointer to the interface buffers. */
+	struct sk_buff_head buffs[DEV_NUMBUFFS];
+
+	/* Pointers to interface service routines. */
+	int (*open)(struct device *dev);
+	int (*stop)(struct device *dev);
+	int (*hard_start_xmit)(struct sk_buff *skb,
+			       struct device *dev);
+	int (*hard_header)(unsigned char *buff,
+			   struct device *dev,
+			   unsigned short type,
+			   void *daddr,
+			   void *saddr,
+			   unsigned len,
+			   struct sk_buff *skb);
+	int (*rebuild_header)(void *eth, struct device *dev,
+			      unsigned long raddr, struct sk_buff *skb);
+	unsigned short (*type_trans)(struct sk_buff *skb,
+				     struct device *dev);
+#define HAVE_MULTICAST
+	void (*set_multicast_list)(struct device *dev,
+				   int num_addrs, void *addrs);
+#define HAVE_SET_MAC_ADDR
+	int (*set_mac_address)(struct device *dev, void *addr);
 #define HAVE_PRIVATE_IOCTL
-  int			  (*do_ioctl)(struct device *dev, struct ifreq *ifr, int cmd);
+	int (*do_ioctl)(struct device *dev, struct ifreq *ifr, int cmd);
 #define HAVE_SET_CONFIG
-  int			  (*set_config)(struct device *dev, struct ifmap *map);
-  
+	int (*set_config)(struct device *dev, struct ifmap *map);
 };
-
 
 struct packet_type {
-  unsigned short	type;	/* This is really htons(ether_type). */
-  struct device *	dev;
-  int			(*func) (struct sk_buff *, struct device *,
-				 struct packet_type *);
-  void			*data;
-  struct packet_type	*next;
+	unsigned short type; /* This is really htons(ether_type). */
+	struct device *dev;
+	int (*func)(struct sk_buff *, struct device *,
+		    struct packet_type *);
+	void *data;
+	struct packet_type *next;
 };
-
 
 #ifdef __KERNEL__
 

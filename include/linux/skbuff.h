@@ -26,61 +26,59 @@
 #define FREE_READ	1
 #define FREE_WRITE	0
 
-
 struct sk_buff_head {
-  struct sk_buff		* volatile next;
-  struct sk_buff		* volatile prev;
+	struct sk_buff *volatile next;
+	struct sk_buff *volatile prev;
 #if CONFIG_SKB_CHECK
-  int				magic_debug_cookie;
+	int magic_debug_cookie;
 #endif
 };
 
-
 struct sk_buff {
-  struct sk_buff		* volatile next;
-  struct sk_buff		* volatile prev;
+	struct sk_buff *volatile next;
+	struct sk_buff *volatile prev;
 #if CONFIG_SKB_CHECK
-  int				magic_debug_cookie;
+	int			magic_debug_cookie;
 #endif
-  struct sk_buff		* volatile link3;
-  struct sock			*sk;
-  volatile unsigned long	when;	/* used to compute rtt's	*/
-  struct timeval		stamp;
-  struct device			*dev;
-  struct sk_buff		*mem_addr;
-  union {
-	struct tcphdr	*th;
-	struct ethhdr	*eth;
-	struct iphdr	*iph;
-	struct udphdr	*uh;
-	unsigned char	*raw;
-	unsigned long	seq;
-  } h;
-  struct iphdr		*ip_hdr;		/* For IPPROTO_RAW */
-  unsigned long			mem_len;
-  unsigned long 		len;
-  unsigned long			fraglen;
-  struct sk_buff		*fraglist;	/* Fragment list */
-  unsigned long			truesize;
-  unsigned long 		saddr;
-  unsigned long 		daddr;
-  unsigned long			raddr;		/* next hop addr */
-  volatile char 		acked,
+	struct sk_buff		*volatile link3;
+	struct sock		*sk;
+	volatile unsigned long	when;	/* used to compute rtt's	*/
+	struct timeval		stamp;
+	struct device		*dev;
+	struct sk_buff		*mem_addr;
+	union {
+		struct tcphdr	*th;
+		struct ethhdr	*eth;
+		struct iphdr	*iph;
+		struct udphdr	*uh;
+		unsigned char	*raw;
+		unsigned long	seq;
+	} h;
+	struct iphdr		*ip_hdr;	/* For IPPROTO_RAW */
+	unsigned long		mem_len;
+	unsigned long		len;
+	unsigned long		fraglen;
+	struct sk_buff		*fraglist;	/* Fragment list */
+	unsigned long		truesize;
+	unsigned long		saddr;
+	unsigned long		daddr;
+	unsigned long		raddr;		/* next hop addr */
+	volatile char		acked,
 				used,
 				free,
 				arp;
-  unsigned char			tries,lock,localroute,pkt_type;
+	unsigned char		tries, lock, localroute, pkt_type;
 #define PACKET_HOST		0		/* To us */
 #define PACKET_BROADCAST	1
 #define PACKET_MULTICAST	2
 #define PACKET_OTHERHOST	3		/* Unmatched promiscuous */
-  unsigned short		users;		/* User count - see datagram.c (and soon seqpacket.c/stream.c) */
-  unsigned short		pkt_class;	/* For drivers that need to cache the packet type with the skbuff (new PPP) */
+	unsigned short		users;		/* User count - see datagram.c (and soon seqpacket.c/stream.c) */
+	unsigned short		pkt_class;	/* For drivers that need to cache the packet type with the skbuff (new PPP) */
 #ifdef CONFIG_SLAVE_BALANCING
-  unsigned short		in_dev_queue;
-#endif  
-  unsigned long			padding[0];
-  unsigned char			data[0];
+	unsigned short		in_dev_queue;
+#endif
+	unsigned long		padding[0];
+	unsigned char		data[0];
 };
 
 #define SK_WMEM_MAX	32767
@@ -104,11 +102,11 @@ extern void			print_skb(struct sk_buff *);
 #endif
 extern void			kfree_skb(struct sk_buff *skb, int rw);
 extern void			skb_queue_head_init(struct sk_buff_head *list);
-extern void			skb_queue_head(struct sk_buff_head *list,struct sk_buff *buf);
-extern void			skb_queue_tail(struct sk_buff_head *list,struct sk_buff *buf);
+extern void			skb_queue_head(struct sk_buff_head *list, struct sk_buff *buf);
+extern void			skb_queue_tail(struct sk_buff_head *list, struct sk_buff *buf);
 extern struct sk_buff *		skb_dequeue(struct sk_buff_head *list);
-extern void 			skb_insert(struct sk_buff *old,struct sk_buff *newsk);
-extern void			skb_append(struct sk_buff *old,struct sk_buff *newsk);
+extern void			skb_insert(struct sk_buff *old, struct sk_buff *newsk);
+extern void			skb_append(struct sk_buff *old, struct sk_buff *newsk);
 extern void			skb_unlink(struct sk_buff *buf);
 extern struct sk_buff *		skb_peek_copy(struct sk_buff_head *list);
 extern struct sk_buff *		alloc_skb(unsigned int size, int priority);
@@ -131,12 +129,12 @@ static __inline__ struct sk_buff *skb_peek(struct sk_buff_head *list_)
 }
 
 #if CONFIG_SKB_CHECK
-extern int 			skb_check(struct sk_buff *skb,int,int, char *);
+extern int			skb_check(struct sk_buff *skb,int,int, char *);
 #define IS_SKB(skb)		skb_check((skb), 0, __LINE__,__FILE__)
 #define IS_SKB_HEAD(skb)	skb_check((skb), 1, __LINE__,__FILE__)
 #else
-#define IS_SKB(skb)		
-#define IS_SKB_HEAD(skb)	
+#define IS_SKB(skb)
+#define IS_SKB_HEAD(skb)
 
 extern __inline__ void skb_queue_head_init(struct sk_buff_head *list)
 {
@@ -265,8 +263,7 @@ extern __inline__ void skb_unlink(struct sk_buff *skb)
 	save_flags(flags);
 	cli();
 
-	if(skb->prev && skb->next)
-	{
+	if (skb->prev && skb->next) {
 		skb->next->prev = skb->prev;
 		skb->prev->next = skb->next;
 		skb->next = NULL;

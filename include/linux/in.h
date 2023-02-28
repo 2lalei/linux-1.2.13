@@ -21,18 +21,18 @@
 
 /* Standard well-defined IP protocols.  */
 enum {
-  IPPROTO_IP = 0,		/* Dummy protocol for TCP		*/
-  IPPROTO_ICMP = 1,		/* Internet Control Message Protocol	*/
-  IPPROTO_IGMP = 2,		/* Internet Gateway Management Protocol */
-  IPPROTO_IPIP = 4,		/* IPIP tunnels (older KA9Q tunnels use 94) */
-  IPPROTO_TCP = 6,		/* Transmission Control Protocol	*/
-  IPPROTO_EGP = 8,		/* Exterior Gateway Protocol		*/
-  IPPROTO_PUP = 12,		/* PUP protocol				*/
-  IPPROTO_UDP = 17,		/* User Datagram Protocol		*/
-  IPPROTO_IDP = 22,		/* XNS IDP protocol			*/
+	IPPROTO_IP = 0,			/* Dummy protocol for TCP		*/
+	IPPROTO_ICMP = 1,		/* Internet Control Message Protocol	*/
+	IPPROTO_IGMP = 2,		/* Internet Gateway Management Protocol */
+	IPPROTO_IPIP = 4,		/* IPIP tunnels (older KA9Q tunnels use 94) */
+	IPPROTO_TCP = 6,		/* Transmission Control Protocol	*/
+	IPPROTO_EGP = 8,		/* Exterior Gateway Protocol		*/
+	IPPROTO_PUP = 12,		/* PUP protocol				*/
+	IPPROTO_UDP = 17,		/* User Datagram Protocol		*/
+	IPPROTO_IDP = 22,		/* XNS IDP protocol			*/
 
-  IPPROTO_RAW = 255,		/* Raw IP packets			*/
-  IPPROTO_MAX
+	IPPROTO_RAW = 255,		/* Raw IP packets			*/
+	IPPROTO_MAX
 };
 
 
@@ -43,8 +43,7 @@ struct in_addr {
 
 /* Request struct for multicast socket ops */
 
-struct ip_mreq 
-{
+struct ip_mreq {
 	struct in_addr imr_multiaddr;	/* IP multicast address of group */
 	struct in_addr imr_interface;	/* local IP address of interface */
 };
@@ -53,13 +52,13 @@ struct ip_mreq
 /* Structure describing an Internet (IP) socket address. */
 #define __SOCK_SIZE__	16		/* sizeof(struct sockaddr)	*/
 struct sockaddr_in {
-  short int		sin_family;	/* Address family		*/
-  unsigned short int	sin_port;	/* Port number			*/
-  struct in_addr	sin_addr;	/* Internet address		*/
+	short int		sin_family;	/* Address family		*/
+	unsigned short int	sin_port;	/* Port number			*/
+	struct in_addr		sin_addr;	/* Internet address		*/
 
-  /* Pad to size of `struct sockaddr'. */
-  unsigned char		__pad[__SOCK_SIZE__ - sizeof(short int) -
-			sizeof(unsigned short int) - sizeof(struct in_addr)];
+	/* Pad to size of `struct sockaddr'. */
+	unsigned char		__pad[__SOCK_SIZE__ - sizeof(short int) -
+				sizeof(unsigned short int) - sizeof(struct in_addr)];
 };
 #define sin_zero	__pad		/* for BSD UNIX comp. -FvK	*/
 
@@ -88,7 +87,7 @@ struct sockaddr_in {
 
 #define	IN_CLASSD(a)		((((long int) (a)) & 0xf0000000) == 0xe0000000)
 #define	IN_MULTICAST(a)		IN_CLASSD(a)
-#define IN_MULTICAST_NET	0xF0000000
+#define	IN_MULTICAST_NET	0xF0000000
 
 #define	IN_EXPERIMENTAL(a)	((((long int) (a)) & 0xe0000000) == 0xe0000000)
 #define	IN_BADCLASS(a)		((((long int) (a)) & 0xf0000000) == 0xf0000000)
@@ -109,9 +108,9 @@ struct sockaddr_in {
 #define	INADDR_LOOPBACK		0x7f000001	/* 127.0.0.1   */
 
 /* Defines for Multicast INADDR */
-#define INADDR_UNSPEC_GROUP   	0xe0000000      /* 224.0.0.0   */
-#define INADDR_ALLHOSTS_GROUP 	0xe0000001      /* 224.0.0.1   */
-#define INADDR_MAX_LOCAL_GROUP  0xe00000ff      /* 224.0.0.255 */
+#define INADDR_UNSPEC_GROUP	0xe0000000	/* 224.0.0.0   */
+#define INADDR_ALLHOSTS_GROUP	0xe0000001	/* 224.0.0.1   */
+#define INADDR_MAX_LOCAL_GROUP	0xe00000ff	/* 224.0.0.255 */
 
 /* <asm/byteorder.h> contains the htonl type stuff.. */
 

@@ -5,13 +5,13 @@
 
 
 struct sockaddr {
-  unsigned short	sa_family;	/* address family, AF_xxx	*/
-  char			sa_data[14];	/* 14 bytes of protocol address	*/
+	unsigned short	sa_family;	/* address family, AF_xxx	*/
+	char		sa_data[14];	/* 14 bytes of protocol address	*/
 };
 
 struct linger {
-  int 			l_onoff;	/* Linger active		*/
-  int			l_linger;	/* How long to linger for	*/
+	int 		l_onoff;	/* Linger active		*/
+	int		l_linger;	/* How long to linger for	*/
 };
 
 /* Socket types. */
@@ -95,9 +95,9 @@ struct linger {
 
 
 /* These need to appear somewhere around here */
-#define IP_DEFAULT_MULTICAST_TTL        1
-#define IP_DEFAULT_MULTICAST_LOOP       1
-#define IP_MAX_MEMBERSHIPS              20
+#define IP_DEFAULT_MULTICAST_TTL	1
+#define IP_DEFAULT_MULTICAST_LOOP	1
+#define IP_MAX_MEMBERSHIPS		20
  
 /* IPX options */
 #define IPX_TYPE	1

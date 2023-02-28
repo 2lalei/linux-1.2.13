@@ -34,7 +34,7 @@
 #define ETH_P_PUP	0x0400		/* Xerox PUP packet		*/
 #define ETH_P_IP	0x0800		/* Internet Protocol packet	*/
 #define ETH_P_ARP	0x0806		/* Address Resolution packet	*/
-#define ETH_P_RARP      0x8035		/* Reverse Addr Res packet	*/
+#define ETH_P_RARP	0x8035		/* Reverse Addr Res packet	*/
 #define ETH_P_X25	0x0805		/* CCITT X.25			*/
 #define ETH_P_ATALK	0x809B		/* Appletalk DDP		*/
 #define ETH_P_IPX	0x8137		/* IPX over DIX			*/
@@ -45,36 +45,36 @@
 #define ETH_P_SNAP	0x0005		/* Internal only		*/
 /* This is an Ethernet frame header. */
 struct ethhdr {
-  unsigned char		h_dest[ETH_ALEN];	/* destination eth addr	*/
-  unsigned char		h_source[ETH_ALEN];	/* source ether addr	*/
-  unsigned short	h_proto;		/* packet type ID field	*/
+	unsigned char		h_dest[ETH_ALEN];	/* destination eth addr	*/
+	unsigned char		h_source[ETH_ALEN];	/* source ether addr	*/
+	unsigned short		h_proto;		/* packet type ID field	*/
 };
 
 /* Ethernet statistics collection data. */
-struct enet_statistics{
-  int	rx_packets;			/* total packets received	*/
-  int	tx_packets;			/* total packets transmitted	*/
-  int	rx_errors;			/* bad packets received		*/
-  int	tx_errors;			/* packet transmit problems	*/
-  int	rx_dropped;			/* no space in linux buffers	*/
-  int	tx_dropped;			/* no space available in linux	*/
-  int	multicast;			/* multicast packets received	*/
-  int	collisions;
+struct enet_statistics {
+	int	rx_packets;			/* total packets received	*/
+	int	tx_packets;			/* total packets transmitted	*/
+	int	rx_errors;			/* bad packets received		*/
+	int	tx_errors;			/* packet transmit problems	*/
+	int	rx_dropped;			/* no space in linux buffers	*/
+	int	tx_dropped;			/* no space available in linux	*/
+	int	multicast;			/* multicast packets received	*/
+	int	collisions;
 
-  /* detailed rx_errors: */
-  int	rx_length_errors;
-  int	rx_over_errors;			/* receiver ring buff overflow	*/
-  int	rx_crc_errors;			/* recved pkt with crc error	*/
-  int	rx_frame_errors;		/* recv'd frame alignment error */
-  int	rx_fifo_errors;			/* recv'r fifo overrun		*/
-  int	rx_missed_errors;		/* receiver missed packet	*/
+	/* detailed rx_errors: */
+	int	rx_length_errors;
+	int	rx_over_errors;			/* receiver ring buff overflow	*/
+	int	rx_crc_errors;			/* recved pkt with crc error	*/
+	int	rx_frame_errors;		/* recv'd frame alignment error */
+	int	rx_fifo_errors;			/* recv'r fifo overrun		*/
+	int	rx_missed_errors;		/* receiver missed packet	*/
 
-  /* detailed tx_errors */
-  int	tx_aborted_errors;
-  int	tx_carrier_errors;
-  int	tx_fifo_errors;
-  int	tx_heartbeat_errors;
-  int	tx_window_errors;
+	/* detailed tx_errors */
+	int	tx_aborted_errors;
+	int	tx_carrier_errors;
+	int	tx_fifo_errors;
+	int	tx_heartbeat_errors;
+	int	tx_window_errors;
 };
 
 #endif	/* _LINUX_IF_ETHER_H */

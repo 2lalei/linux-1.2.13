@@ -42,7 +42,7 @@ struct timestamp {
 		flags:4;
 #else
 #error	"Please fix <asm/byteorder.h>"
-#endif						
+#endif
 	__u8	full_char;
 	} x;
 	__u32	data[9];
@@ -52,22 +52,22 @@ struct timestamp {
 #define MAX_ROUTE	16
 
 struct route {
-  char		route_size;
-  char		pointer;
-  unsigned long route[MAX_ROUTE];
+	char		route_size;
+	char		pointer;
+	unsigned long	route[MAX_ROUTE];
 };
 
 
 struct options {
-  struct route		record_route;
-  struct route		loose_route;
-  struct route		strict_route;
-  struct timestamp	tstamp;
-  unsigned short	security;
-  unsigned short	compartment;
-  unsigned short	handling;
-  unsigned short	stream;
-  unsigned		tcc;
+	struct route		record_route;
+	struct route		loose_route;
+	struct route		strict_route;
+	struct timestamp	tstamp;
+	unsigned short		security;
+	unsigned short		compartment;
+	unsigned short		handling;
+	unsigned short		stream;
+	unsigned		tcc;
 };
 
 
@@ -77,7 +77,7 @@ struct iphdr {
 		version:4;
 #elif defined (BIG_ENDIAN_BITFIELD)
 	__u8	version:4,
-  		ihl:4;
+		ihl:4;
 #else
 #error	"Please fix <asm/byteorder.h>"
 #endif

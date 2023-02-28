@@ -50,30 +50,30 @@
 #include "sock.h"
 #include "arp.h"
 
-void delete_timer (struct sock *t)
+void delete_timer(struct sock *t)
 {
 	unsigned long flags;
 
-	save_flags (flags);
+	save_flags(flags);
 	cli();
 
 	t->timeout = 0;
-	del_timer (&t->timer);
+	del_timer(&t->timer);
 
-	restore_flags (flags);
+	restore_flags(flags);
 }
 
-void reset_timer (struct sock *t, int timeout, unsigned long len)
+void reset_timer(struct sock *t, int timeout, unsigned long len)
 {
-	delete_timer (t);
+	delete_timer(t);
 	t->timeout = timeout;
 #if 1
-  /* FIXME: ??? */
+	/* FIXME: ??? */
 	if ((int) len < 0)	/* prevent close to infinite timers. THEY _DO_ */
 		len = 3;	/* happen (negative values ?) - don't ask me why ! -FB */
 #endif
 	t->timer.expires = len;
-	add_timer (&t->timer);
+	add_timer(&t->timer);
 }
 
 

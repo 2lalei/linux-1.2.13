@@ -46,30 +46,28 @@
 				 * 90 minutes to time out.
 				 */
 
-#define TCP_TIMEOUT_LEN	(15*60*HZ) /* should be about 15 mins		*/
-#define TCP_TIMEWAIT_LEN (60*HZ) /* how long to wait to successfully 
-				  * close the socket, about 60 seconds	*/
-#define TCP_FIN_TIMEOUT (3*60*HZ) /* BSD style FIN_WAIT2 deadlock breaker */				  
-#define TCP_ACK_TIME	(3*HZ)	/* time to delay before sending an ACK	*/
-#define TCP_DONE_TIME	250	/* maximum time to wait before actually
-				 * destroying a socket			*/
-#define TCP_WRITE_TIME	3000	/* initial time to wait for an ACK,
-			         * after last transmit			*/
-#define TCP_TIMEOUT_INIT (3*HZ)	/* RFC 1122 initial timeout value	*/
-#define TCP_SYN_RETRIES	5	/* number of times to retry opening a
-				 * connection 				*/
-#define TCP_PROBEWAIT_LEN 100	/* time to wait between probes when
-				 * I've got something to write and
-				 * there is no window			*/
-
-#define TCP_NO_CHECK	0	/* turn to one if you want the default
-				 * to be no checksum			*/
-
+#define TCP_TIMEOUT_LEN (15 * 60 * HZ) /* should be about 15 mins		*/
+#define TCP_TIMEWAIT_LEN (60 * HZ)     /* how long to wait to successfully \
+					* close the socket, about 60 seconds	*/
+#define TCP_FIN_TIMEOUT (3 * 60 * HZ)  /* BSD style FIN_WAIT2 deadlock breaker */
+#define TCP_ACK_TIME (3 * HZ)	       /* time to delay before sending an ACK	*/
+#define TCP_DONE_TIME 250	       /* maximum time to wait before actually \
+					* destroying a socket			*/
+#define TCP_WRITE_TIME 3000	       /* initial time to wait for an ACK, \
+					* after last transmit			*/
+#define TCP_TIMEOUT_INIT (3 * HZ)      /* RFC 1122 initial timeout value	*/
+#define TCP_SYN_RETRIES 5	       /* number of times to retry opening a \
+					* connection 				*/
+#define TCP_PROBEWAIT_LEN 100	       /* time to wait between probes when \
+					* I've got something to write and  \
+					* there is no window			*/
+#define TCP_NO_CHECK 0		       /* turn to one if you want the default \
+					* to be no checksum			*/
 
 /*
  *	TCP option
  */
- 
+
 #define TCPOPT_NOP		1	/* Padding */
 #define TCPOPT_EOL		0	/* End of options */
 #define TCPOPT_MSS		2	/* Segment size negotiating */
@@ -87,7 +85,7 @@
 
 extern __inline int before(unsigned long seq1, unsigned long seq2)
 {
-        return (long)(seq1-seq2) < 0;
+	return (long)(seq1-seq2) < 0;
 }
 
 extern __inline int after(unsigned long seq1, unsigned long seq2)
@@ -99,7 +97,7 @@ extern __inline int after(unsigned long seq1, unsigned long seq2)
 /* is s2<=s1<=s3 ? */
 extern __inline int between(unsigned long seq1, unsigned long seq2, unsigned long seq3)
 {
-	return (after(seq1+1, seq2) && before(seq1, seq3+1));
+	return (after(seq1 + 1, seq2) && before(seq1, seq3 + 1));
 }
 
 
@@ -112,31 +110,29 @@ extern __inline int between(unsigned long seq1, unsigned long seq2, unsigned lon
 extern __inline const int
 tcp_connected(const int state)
 {
-  return(state == TCP_ESTABLISHED || state == TCP_CLOSE_WAIT ||
-	 state == TCP_FIN_WAIT1   || state == TCP_FIN_WAIT2 ||
-	 state == TCP_SYN_RECV);
+	return (state == TCP_ESTABLISHED || state == TCP_CLOSE_WAIT ||
+		state == TCP_FIN_WAIT1 || state == TCP_FIN_WAIT2 ||
+		state == TCP_SYN_RECV);
 }
 
 
 extern struct proto tcp_prot;
 
+extern void tcp_err(int err, unsigned char *header, unsigned long daddr,
+		    unsigned long saddr, struct inet_protocol *protocol);
+extern void tcp_shutdown(struct sock *sk, int how);
+extern int tcp_rcv(struct sk_buff *skb, struct device *dev,
+		   struct options *opt, unsigned long daddr,
+		   unsigned short len, unsigned long saddr, int redo,
+		   struct inet_protocol *protocol);
 
-extern void	tcp_err(int err, unsigned char *header, unsigned long daddr,
-			unsigned long saddr, struct inet_protocol *protocol);
-extern void	tcp_shutdown (struct sock *sk, int how);
-extern int	tcp_rcv(struct sk_buff *skb, struct device *dev,
-			struct options *opt, unsigned long daddr,
-			unsigned short len, unsigned long saddr, int redo,
-			struct inet_protocol *protocol);
-
-extern int	tcp_ioctl(struct sock *sk, int cmd, unsigned long arg);
+extern int tcp_ioctl(struct sock *sk, int cmd, unsigned long arg);
 
 extern int tcp_select_window(struct sock *sk);
-extern void tcp_send_check(struct tcphdr *th, unsigned long saddr, 
-		unsigned long daddr, int len, struct sock *sk);
+extern void tcp_send_check(struct tcphdr *th, unsigned long saddr,
+			   unsigned long daddr, int len, struct sock *sk);
 extern void tcp_send_probe0(struct sock *sk);
 extern void tcp_enqueue_partial(struct sk_buff *, struct sock *);
-extern struct sk_buff * tcp_dequeue_partial(struct sock *);
-
+extern struct sk_buff *tcp_dequeue_partial(struct sock *);
 
 #endif	/* _TCP_H */

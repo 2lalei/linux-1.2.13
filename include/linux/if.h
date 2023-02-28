@@ -48,7 +48,7 @@
  * be located.
  */
  
-struct ifaddr 
+struct ifaddr
 {
 	struct sockaddr	ifa_addr;	/* address of interface		*/
 	union {
@@ -72,7 +72,7 @@ struct ifaddr
  *	being very small might be worth keeping for clean configuration.
  */
 
-struct ifmap 
+struct ifmap
 {
 	unsigned long mem_start;
 	unsigned long mem_end;
@@ -94,8 +94,7 @@ struct ifreq
 {
 #define IFHWADDRLEN	6
 #define	IFNAMSIZ	16
-	union
-	{
+	union {
 		char	ifrn_name[IFNAMSIZ];		/* if name, e.g. "en0" */
 		char	ifrn_hwaddr[IFHWADDRLEN];	/* Obsolete */
 	} ifr_ifrn;
@@ -105,11 +104,11 @@ struct ifreq
 		struct	sockaddr ifru_dstaddr;
 		struct	sockaddr ifru_broadaddr;
 		struct	sockaddr ifru_netmask;
-		struct  sockaddr ifru_hwaddr;
+		struct	sockaddr ifru_hwaddr;
 		short	ifru_flags;
 		int	ifru_metric;
 		int	ifru_mtu;
-		struct  ifmap ifru_map;
+		struct	ifmap ifru_map;
 		char	ifru_slave[IFNAMSIZ];	/* Just fits the size */
 		caddr_t	ifru_data;
 	} ifr_ifru;
@@ -139,8 +138,7 @@ struct ifreq
 struct ifconf 
 {
 	int	ifc_len;			/* size of buffer	*/
-	union 
-	{
+	union {
 		caddr_t	ifcu_buf;
 		struct	ifreq *ifcu_req;
 	} ifc_ifcu;

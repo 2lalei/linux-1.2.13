@@ -18,7 +18,7 @@ asmlinkage void do_bottom_half(void);
 
 /* Who gets which entry in bh_base.  Things which will occur most often
    should come first - in which case NET should be up the top with SERIAL/TQUEUE! */
-   
+
 enum {
 	TIMER_BH = 0,
 	CONSOLE_BH,

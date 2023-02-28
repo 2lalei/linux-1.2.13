@@ -11,8 +11,7 @@
 #define _LINUX_NOTIFIER_H
 #include <linux/errno.h>
 
-struct notifier_block
-{
+struct notifier_block {
 	int (*notifier_call)(unsigned long, void *);
 	struct notifier_block *next;
 	int priority;
@@ -46,14 +45,12 @@ extern __inline__ int notifier_chain_register(struct notifier_block **list, stru
  
 extern __inline__ int notifier_chain_unregister(struct notifier_block **nl, struct notifier_block *n)
 {
-	while((*nl)!=NULL)
-	{
-		if((*nl)==n)
-		{
+	while ((*nl) != NULL) {
+		if ((*nl) == n) {
 			*nl=n->next;
 			return 0;
 		}
-		nl=&((*nl)->next);
+		nl = &((*nl)->next);
 	}
 	return -ENOENT;
 }
@@ -64,14 +61,13 @@ extern __inline__ int notifier_chain_unregister(struct notifier_block **nl, stru
  
 extern __inline__ int notifier_call_chain(struct notifier_block **n, unsigned long val, void *v)
 {
-	int ret=NOTIFY_DONE;
+	int ret = NOTIFY_DONE;
 	struct notifier_block *nb = *n;
-	while(nb)
-	{
-		ret=nb->notifier_call(val,v);
-		if(ret&NOTIFY_STOP_MASK)
+	while (nb) {
+		ret = nb->notifier_call(val, v);
+		if (ret & NOTIFY_STOP_MASK)
 			return ret;
-		nb=nb->next;
+		nb = nb->next;
 	}
 	return ret;
 }
@@ -84,13 +80,16 @@ extern __inline__ int notifier_call_chain(struct notifier_block **n, unsigned lo
  *	low memory chain, screenblank chain (for plug in modular screenblankers) 
  *	VC switch chains (for loadable kernel svgalib VC switch helpers) etc...
  */
- 
+
 /* netdevice notifier chain */
 #define NETDEV_UP	0x0001	/* For now you can't veto a device up/down */
 #define NETDEV_DOWN	0x0002
-#define NETDEV_REBOOT	0x0003	/* Tell a protocol stack a network interface
-				   detected a hardware crash and restarted
-				   - we can use this eg to kick tcp sessions
-				   once done */
+#define NETDEV_REBOOT	0x0003	
+				/*
+				 * Tell a protocol stack a network interface
+				 * detected a hardware crash and restarted
+				 * - we can use this eg to kick tcp sessions
+				 * once done
+				 */
 #endif
 #endif

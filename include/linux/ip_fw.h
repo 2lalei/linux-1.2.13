@@ -49,12 +49,12 @@ struct ip_fw
 	struct in_addr fw_smsk, fw_dmsk;	/* Mask for src and dest IP addr */
 	struct in_addr fw_via;			/* IP address of interface "via" */
 	unsigned short fw_flg;			/* Flags word */
-	unsigned short fw_nsp, fw_ndp;          /* N'of src ports and # of dst ports */
+	unsigned short fw_nsp, fw_ndp;		/* N'of src ports and # of dst ports */
 						/* in ports array (dst ports follow */
-    						/* src ports; max of 10 ports in all; */
-    						/* count of 0 means match all ports) */
-#define IP_FW_MAX_PORTS	10      		/* A reasonable maximum */
-	unsigned short fw_pts[IP_FW_MAX_PORTS]; /* Array of port numbers to match */
+						/* src ports; max of 10 ports in all; */
+						/* count of 0 means match all ports) */
+#define IP_FW_MAX_PORTS	10			/* A reasonable maximum */
+	unsigned short fw_pts[IP_FW_MAX_PORTS];	/* Array of port numbers to match */
 	unsigned long  fw_pcnt,fw_bcnt;		/* Packet and byte counters */
 };
 
@@ -85,11 +85,11 @@ struct ip_fw
 #define IP_FW_F_ICMPRPL 0x100	/* Send back icmp unreachable packet  */
 #define IP_FW_F_MASK	0x1FF	/* All possible flag bits mask        */
 
-/*    
+/*
  *	New IP firewall options for [gs]etsockopt at the RAW IP level.
  *	Unlike BSD Linux inherits IP options so you don't have to use
  *	a raw socket for this. Instead we check rights in the calls.
- */     
+ */
 
 #define IP_FW_BASE_CTL   64
 

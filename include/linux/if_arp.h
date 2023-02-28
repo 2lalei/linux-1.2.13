@@ -24,13 +24,13 @@
 /* ARP protocol HARDWARE identifiers. */
 #define ARPHRD_NETROM	0		/* from KA9Q: NET/ROM pseudo	*/
 #define ARPHRD_ETHER 	1		/* Ethernet 10Mbps		*/
-#define	ARPHRD_EETHER	2		/* Experimental Ethernet	*/
-#define	ARPHRD_AX25	3		/* AX.25 Level 2		*/
-#define	ARPHRD_PRONET	4		/* PROnet token ring		*/
-#define	ARPHRD_CHAOS	5		/* Chaosnet			*/
-#define	ARPHRD_IEEE802	6		/* IEEE 802.2 Ethernet- huh?	*/
-#define	ARPHRD_ARCNET	7		/* ARCnet			*/
-#define	ARPHRD_APPLETLK	8		/* APPLEtalk			*/
+#define ARPHRD_EETHER	2		/* Experimental Ethernet	*/
+#define ARPHRD_AX25	3		/* AX.25 Level 2		*/
+#define ARPHRD_PRONET	4		/* PROnet token ring		*/
+#define ARPHRD_CHAOS	5		/* Chaosnet			*/
+#define ARPHRD_IEEE802	6		/* IEEE 802.2 Ethernet- huh?	*/
+#define ARPHRD_ARCNET	7		/* ARCnet			*/
+#define ARPHRD_APPLETLK	8		/* APPLEtalk			*/
 /* Dummy types for non ARP hardware */
 #define ARPHRD_SLIP	256
 #define ARPHRD_CSLIP	257
@@ -50,10 +50,10 @@
 
 /* ARP ioctl request. */
 struct arpreq {
-  struct sockaddr	arp_pa;		/* protocol address		*/
-  struct sockaddr	arp_ha;		/* hardware address		*/
-  int			arp_flags;	/* flags			*/
-  struct sockaddr       arp_netmask;    /* netmask (only for proxy arps) */
+	struct sockaddr	arp_pa;		/* protocol address		*/
+	struct sockaddr	arp_ha;		/* hardware address		*/
+	int		arp_flags;	/* flags			*/
+	struct sockaddr	arp_netmask;	/* netmask (only for proxy arps) */
 };
 
 /* ARP Flag values. */
@@ -61,8 +61,7 @@ struct arpreq {
 #define	ATF_PERM	0x04		/* permanent entry		*/
 #define	ATF_PUBL	0x08		/* publish entry		*/
 #define	ATF_USETRAILERS	0x10		/* has requested trailers	*/
-#define ATF_NETMASK     0x20            /* want to use a netmask (only
-					   for proxy entries) */
+#define ATF_NETMASK	0x20		/* want to use a netmask (only for proxy entries) */
 
 /*
  *	This structure defines an ethernet arp header.
@@ -77,9 +76,9 @@ struct arphdr
 	unsigned short	ar_op;		/* ARP opcode (command)		*/
 
 #if 0
-	 /*
-	  *	 Ethernet looks like this : This bit is variable sized however...
-	  */
+	/*
+	 *	 Ethernet looks like this : This bit is variable sized however...
+	 */
 	unsigned char		ar_sha[ETH_ALEN];	/* sender hardware address	*/
 	unsigned char		ar_sip[4];		/* sender IP address		*/
 	unsigned char		ar_tha[ETH_ALEN];	/* target hardware address	*/

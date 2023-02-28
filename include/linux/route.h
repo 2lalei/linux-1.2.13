@@ -64,6 +64,6 @@ struct rtentry {
  */
  
 #define	RTF_MTU		RTF_MSS
-#define rt_mtu		rt_mss		
+#define rt_mtu		rt_mss
 
 #endif	/* _LINUX_ROUTE_H */

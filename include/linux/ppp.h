@@ -30,7 +30,7 @@
 #define	PPPIOCSXASYNCMAP 0x549C	/* set async table */
 #define PPPIOCSMRU	 0x549D	/* set receive unit size for PPP */
 #define PPPIOCRASYNCMAP	 0x549E	/* set receive async map */
-#define PPPIOCSMAXCID    0x549F /* set the maximum compression slot id */
+#define PPPIOCSMAXCID	 0x549F /* set the maximum compression slot id */
 
 /* special characters in the framing protocol */
 #define	PPP_ALLSTATIONS	0xff	/* All-Stations broadcast address */
@@ -91,18 +91,18 @@
  */
 
 struct ppp_lqp_packet_hdr {
-  unsigned long		LastOutLQRs;	/* Copied from PeerOutLQRs	 */
-  unsigned long		LastOutPackets; /* Copied from PeerOutPackets	 */
-  unsigned long		LastOutOctets;	/* Copied from PeerOutOctets	 */
-  unsigned long		PeerInLQRs;	/* Copied from SavedInLQRs	 */
-  unsigned long		PeerInPackets;	/* Copied from SavedInPackets	 */
-  unsigned long		PeerInDiscards; /* Copied from SavedInDiscards	 */
-  unsigned long		PeerInErrors;	/* Copied from SavedInErrors	 */
-  unsigned long		PeerInOctets;	/* Copied from SavedInOctets	 */
-  unsigned long		PeerOutLQRs;	/* Copied from OutLQRs, plus 1	 */
-  unsigned long		PeerOutPackets; /* Current ifOutUniPackets, + 1	 */
-  unsigned long		PeerOutOctets;	/* Current ifOutOctets + LQR	 */
-  };
+	unsigned long		LastOutLQRs;	/* Copied from PeerOutLQRs	 */
+	unsigned long		LastOutPackets; /* Copied from PeerOutPackets	 */
+	unsigned long		LastOutOctets;	/* Copied from PeerOutOctets	 */
+	unsigned long		PeerInLQRs;	/* Copied from SavedInLQRs	 */
+	unsigned long		PeerInPackets;	/* Copied from SavedInPackets	 */
+	unsigned long		PeerInDiscards; /* Copied from SavedInDiscards	 */
+	unsigned long		PeerInErrors;	/* Copied from SavedInErrors	 */
+	unsigned long		PeerInOctets;	/* Copied from SavedInOctets	 */
+	unsigned long		PeerOutLQRs;	/* Copied from OutLQRs, plus 1	 */
+	unsigned long		PeerOutPackets; /* Current ifOutUniPackets, + 1	 */
+	unsigned long		PeerOutOctets;	/* Current ifOutOctets + LQR	 */
+};
 
 /*
  * This data is not sent to the remote. It is updated by the driver when
@@ -110,11 +110,11 @@ struct ppp_lqp_packet_hdr {
  */
 
 struct ppp_lqp_packet_trailer {
-  unsigned long		SaveInLQRs;	/* Current InLQRs on reception	 */
-  unsigned long		SaveInPackets;	/* Current ifInUniPackets	 */
-  unsigned long		SaveInDiscards; /* Current ifInDiscards		 */
-  unsigned long		SaveInErrors;	/* Current ifInErrors		 */
-  unsigned long		SaveInOctets;	/* Current ifInOctects		 */
+	unsigned long		SaveInLQRs;	/* Current InLQRs on reception	 */
+	unsigned long		SaveInPackets;	/* Current ifInUniPackets	 */
+	unsigned long		SaveInDiscards; /* Current ifInDiscards		 */
+	unsigned long		SaveInErrors;	/* Current ifInErrors		 */
+	unsigned long		SaveInOctets;	/* Current ifInOctects		 */
 };
 
 /*
@@ -124,9 +124,9 @@ struct ppp_lqp_packet_trailer {
  */
 
 struct ppp_lpq_packet {
-  unsigned long			magic;	/* current magic value		 */
-  struct ppp_lqp_packet_hdr	hdr;	/* Header fields for structure	 */
-  struct ppp_lqp_packet_trailer tail;	/* Trailer fields (not sent)	 */
+	unsigned long			magic;	/* current magic value		 */
+	struct ppp_lqp_packet_hdr	hdr;	/* Header fields for structure	 */
+	struct ppp_lqp_packet_trailer	tail;	/* Trailer fields (not sent)	 */
 };
 
 /*
@@ -134,21 +134,21 @@ struct ppp_lpq_packet {
  */
 
 struct ppp_stats {
-  unsigned long		rbytes;		/* bytes received		 */
-  unsigned long		rcomp;		/* compressed packets received	 */
-  unsigned long		runcomp;	/* uncompressed packets received */
-  unsigned long		rothers;	/* non-ip frames received	 */
-  unsigned long		rerrors;	/* received errors		 */
-  unsigned long		roverrun;	/* "buffer overrun" counter	 */
-  unsigned long		tossed;		/* packets discarded		 */
-  unsigned long		runts;		/* frames too short to process	 */
-  unsigned long		rgiants;	/* frames too large to process	 */
-  unsigned long		sbytes;		/* bytes sent			 */
-  unsigned long		scomp;		/* compressed packets sent	 */
-  unsigned long		suncomp;	/* uncompressed packets sent	 */
-  unsigned long		sothers;	/* non-ip frames sent		 */
-  unsigned long		serrors;	/* transmitter errors		 */
-  unsigned long		sbusy;		/* "transmitter busy" counter	 */
+	unsigned long		rbytes;		/* bytes received		 */
+	unsigned long		rcomp;		/* compressed packets received	 */
+	unsigned long		runcomp;	/* uncompressed packets received */
+	unsigned long		rothers;	/* non-ip frames received	 */
+	unsigned long		rerrors;	/* received errors		 */
+	unsigned long		roverrun;	/* "buffer overrun" counter	 */
+	unsigned long		tossed;		/* packets discarded		 */
+	unsigned long		runts;		/* frames too short to process	 */
+	unsigned long		rgiants;	/* frames too large to process	 */
+	unsigned long		sbytes;		/* bytes sent			 */
+	unsigned long		scomp;		/* compressed packets sent	 */
+	unsigned long		suncomp;	/* uncompressed packets sent	 */
+	unsigned long		sothers;	/* non-ip frames sent		 */
+	unsigned long		serrors;	/* transmitter errors		 */
+	unsigned long		sbusy;		/* "transmitter busy" counter	 */
 };
 
 /*
@@ -156,75 +156,75 @@ struct ppp_stats {
  */
 
 struct ppp_ddinfo {
-  unsigned long		ip_sjiffies;	/* time when last IP frame sent */
-  unsigned long		ip_rjiffies;	/* time when last IP frame recvd*/
-  unsigned long		nip_sjiffies;	/* time when last NON-IP sent	*/
-  unsigned long		nip_rjiffies;	/* time when last NON-IP recvd	*/
+	unsigned long		ip_sjiffies;	/* time when last IP frame sent */
+	unsigned long		ip_rjiffies;	/* time when last IP frame recvd*/
+	unsigned long		nip_sjiffies;	/* time when last NON-IP sent	*/
+	unsigned long		nip_rjiffies;	/* time when last NON-IP recvd	*/
 };
 
 #ifdef __KERNEL__
 
 struct ppp {
-  int			magic;		/* magic value for structure	*/
+	int			magic;		/* magic value for structure	*/
 
-  /* Bitmapped flag fields. */
-  char			inuse;		/* are we allocated?		*/
-  char			sending;	/* "channel busy" indicator	*/
-  char			escape;		/* 0x20 if prev char was PPP_ESC*/
-  char			toss;		/* toss this frame		*/
+	/* Bitmapped flag fields. */
+	char			inuse;		/* are we allocated?		*/
+	char			sending;	/* "channel busy" indicator	*/
+	char			escape;		/* 0x20 if prev char was PPP_ESC*/
+	char			toss;		/* toss this frame		*/
 
-  unsigned int		flags;		/* miscellany			*/
+	unsigned int		flags;		/* miscellany			*/
 
-  unsigned long		xmit_async_map[8]; /* 1 bit means that given control 
-					   character is quoted on output*/
+	unsigned long		xmit_async_map[8]; /* 1 bit means that given control 
+				   character is quoted on output*/
 
-  unsigned long		recv_async_map; /* 1 bit means that given control 
-					   character is ignored on input*/
-  int			mtu;		/* maximum xmit frame size	*/
-  int			mru;		/* maximum receive frame size	*/
-  unsigned short	fcs;		/* FCS field of current frame	*/
+	unsigned long		recv_async_map; /* 1 bit means that given control 
+				   character is ignored on input*/
+	int			mtu;		/* maximum xmit frame size	*/
+	int			mru;		/* maximum receive frame size	*/
+	unsigned short	fcs;		/* FCS field of current frame	*/
 
-  /* Various fields. */
-  int			line;		/* PPP channel number		*/
-  struct tty_struct	*tty;		/* ptr to TTY structure		*/
-  struct device		*dev;		/* easy for intr handling	*/
-  struct slcompress	*slcomp;	/* for header compression	*/
-  unsigned long		last_xmit;	/* time of last transmission	*/
+	/* Various fields. */
+	int			line;		/* PPP channel number		*/
+	struct tty_struct	*tty;		/* ptr to TTY structure		*/
+	struct device		*dev;		/* easy for intr handling	*/
+	struct slcompress	*slcomp;	/* for header compression	*/
+	unsigned long		last_xmit;	/* time of last transmission	*/
 
-  /* These are pointers to the malloc()ed frame buffers.
-     These buffers are used while processing a packet.	If a packet
-     has to hang around for the user process to read it, it lingers in
-     the user buffers below. */
-  unsigned char		*rbuff;		/* receiver buffer		*/
-  unsigned char		*xbuff;		/* transmitter buffer		*/
-  unsigned char		*cbuff;		/* compression buffer		*/
+	/* These are pointers to the malloc()ed frame buffers.
+	   These buffers are used while processing a packet.	If a packet
+	   has to hang around for the user process to read it, it lingers in
+	   the user buffers below. */
+	unsigned char		*rbuff;		/* receiver buffer		*/
+	unsigned char		*xbuff;		/* transmitter buffer		*/
+	unsigned char		*cbuff;		/* compression buffer		*/
 
-  /* These are the various pointers into the buffers. */
-  unsigned char		*rhead;		/* RECV buffer pointer (head)	*/
-  unsigned char		*rend;		/* RECV buffer pointer (end)	*/
-  int			rcount;		/* PPP receive counter		*/
-  unsigned char		*xhead;		/* XMIT buffer pointer (head)	*/
-  unsigned char 	*xtail;		/* XMIT buffer pointer (end) 	*/
+	/* These are the various pointers into the buffers. */
+	unsigned char		*rhead;		/* RECV buffer pointer (head)	*/
+	unsigned char		*rend;		/* RECV buffer pointer (end)	*/
+	int			rcount;		/* PPP receive counter		*/
+	unsigned char		*xhead;		/* XMIT buffer pointer (head)	*/
+	unsigned char		*xtail;		/* XMIT buffer pointer (end) 	*/
 
-  /* Structures for interfacing with the user process. */
+	/* Structures for interfacing with the user process. */
 #define RBUFSIZE 4000
-  unsigned char		*us_rbuff;	/* circular incoming packet buf.*/
-  unsigned char		*us_rbuff_end;	/* end of allocated space	*/
-  unsigned char		*us_rbuff_head; /* head of waiting packets	*/
-  unsigned char		*us_rbuff_tail; /* tail of waiting packets	*/
-  unsigned char		us_rbuff_lock;	/* lock: bit 0 head bit 1 tail	*/
-  int			inp_sig;	/* input ready signal for pgrp	*/
-  int			inp_sig_pid;	/* process to get notified	*/
+	unsigned char		*us_rbuff;	/* circular incoming packet buf.*/
+	unsigned char		*us_rbuff_end;	/* end of allocated space	*/
+	unsigned char		*us_rbuff_head; /* head of waiting packets	*/
+	unsigned char		*us_rbuff_tail; /* tail of waiting packets	*/
+	unsigned char		us_rbuff_lock;	/* lock: bit 0 head bit 1 tail	*/
+	int			inp_sig;	/* input ready signal for pgrp	*/
+	int			inp_sig_pid;	/* process to get notified	*/
 
-  /* items to support the select() function */
-  struct wait_queue	*write_wait;	/* queue for reading processes	*/
-  struct wait_queue	*read_wait;	/* queue for writing processes	*/
+	/* items to support the select() function */
+	struct wait_queue	*write_wait;	/* queue for reading processes	*/
+	struct wait_queue	*read_wait;	/* queue for writing processes	*/
 
-  /* PPP interface statistics. */
-  struct ppp_stats	stats;		/* statistic information	*/
+	/* PPP interface statistics. */
+	struct ppp_stats	stats;		/* statistic information	*/
 
-  /* PPP demand dial information. */
-  struct ppp_ddinfo	ddinfo;		/* demand dial information	*/
+	/* PPP demand dial information. */
+	struct ppp_ddinfo	ddinfo;		/* demand dial information	*/
 };
 
 #endif	/* __KERNEL__ */
